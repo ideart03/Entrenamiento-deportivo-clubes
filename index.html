@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clubes Destacados - Entrenamiento Deportivo</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .accordion-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .accordion-header {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+            border: none;
+            text-align: left;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .accordion-header.active {
+            background: linear-gradient(90deg, rgba(56, 189, 248, 0.2) 0%, rgba(56, 189, 248, 0) 100%);
+            color: var(--accent);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .accordion-header::after {
+            content: '▼';
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.active::after {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .accordion-content.active {
+            max-height: 5000px;
+            padding: 1.5rem;
+            transition: max-height 0.5s ease-in;
+        }
+
+        .club-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .club-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .club-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .club-name {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .club-info {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .club-tag {
+            display: inline-block;
+            background-color: rgba(56, 189, 248, 0.15);
+            color: var(--accent);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            width: fit-content;
+        }
+
+        .club-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            background-color: var(--accent);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: auto;
+            transition: all 0.2s;
+        }
+
+        .club-link:hover {
+            background-color: #0ea5e9;
+            transform: scale(1.02);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        /* Category Colors */
+        .accordion-header.regional {
+            border-left: 4px solid #38bdf8;
+        }
+
+        .accordion-header.nacional {
+            border-left: 4px solid #4ade80;
+        }
+
+        .accordion-header.internacional {
+            border-left: 4px solid #f472b6;
+        }
+
+        .accordion-header.mundial {
+            border-left: 4px solid #fbbf24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <a href="../index.html" class="back-link">← Volver al Inicio</a>
+        <h1
+            style="text-align: center; margin-bottom: 2rem; font-size: 2.5rem; background: linear-gradient(to right, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Clubes Destacados</h1>
+
+        <div class="accordion-container">
+
+            <!-- 1. SIBATÉ -->
+            <div class="accordion-item">
+                <button class="accordion-header regional" onclick="toggleAccordion(this)">🏊 1. MEJORES CLUBES DE
+                    SIBATÉ</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. ESCUELA DE FORMACIÓN DEPORTIVA IMDERS</span>
+                            <div class="club-info">📍 Transversal 6 # 11, Polideportivo Municipal</div>
+                            <div class="club-info">📞 Contacto IMDERS Sibaté</div><span class="club-tag">Gratuito o bajo
+                                costo</span>
+                            <div class="club-info">Masificación, participación en juegos departamentales</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. CLUB DE NATACIÓN SIBATÉ (SELECCIÓN)</span>
+                            <div class="club-info">📍 Polideportivo Municipal</div>
+                            <div class="club-info">📞 Por convocatoria anual</div><span class="club-tag">Entrenamientos
+                                intensivos</span>
+                            <div class="club-info">Representación municipal en competencias regionales</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. ESCUELA DE INICIACIÓN ACUÁTICA</span>
+                            <div class="club-info">📍 Polideportivo Municipal</div>
+                            <div class="club-info">📞 Programas trimestrales</div><span class="club-tag">Inscripciones
+                                en Alcaldía</span>
+                            <div class="club-info">Desarrollo motor temprano (2-6 años)</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. PROGRAMA ADULTO MAYOR ACTIVO</span>
+                            <div class="club-info">📍 Polideportivo Municipal</div>
+                            <div class="club-info">📞 Sesiones guiadas</div><span class="club-tag">Enfoque
+                                terapéutico</span>
+                            <div class="club-info">Actividad física para adultos mayores (+60 años)</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. ESCUELA DEPORTIVA COLSUBSIDIO</span>
+                            <div class="club-info">📍 Programas itinerantes en Sibaté</div>
+                            <div class="club-info">📞 Requiere afiliación a Colsubsidio</div><span
+                                class="club-tag">Enfoque familiar</span>
+                            <div class="club-info">Formación integral para familias afiliadas</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. CLUB DEPORTIVO LOS FRAILEJONES</span>
+                            <div class="club-info">📍 Sibaté Centro</div>
+                            <div class="club-info">📞 Privado/Mixto</div><span class="club-tag">Ofrece
+                                multideporte</span>
+                            <div class="club-info">Formación multideportiva, promoción local</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. ESCUELA "FUTUROS CAMPEONES"</span>
+                            <div class="club-info">📍 Polideportivo Municipal (uso compartido)</div>
+                            <div class="club-info">📞 Horarios extraescolares</div><span class="club-tag">Enseñanza
+                                técnica</span>
+                            <div class="club-info">Preparación para competencias</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. GRUPO ACTIVIDAD ACUÁTICA HOSPITALARIA</span>
+                            <div class="club-info">📍 Piscina Municipal (convenio)</div>
+                            <div class="club-info">📞 Pacientes referidos</div><span class="club-tag">Enfoque
+                                terapéutico</span>
+                            <div class="club-info">Rehabilitación y prevención de lesiones</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. CLUB PROMOTOR DEPORTES NÁUTICOS</span>
+                            <div class="club-info">📍 Embalse del Muña</div>
+                            <div class="club-info">📞 Actividades estacionales</div><span class="club-tag">Autorización
+                                requerida</span>
+                            <div class="club-info">Aguas abiertas, canotaje, natación recreativa</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. SEMILLEROS DEPORTIVOS IMDERS</span>
+                            <div class="club-info">📍 Polideportivo Municipal</div>
+                            <div class="club-info">📞 Cupos limitados</div><span class="club-tag">Gratuito</span>
+                            <div class="club-info">Detección de talentos (4-8 años)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. SOACHA -->
+            <div class="accordion-item">
+                <button class="accordion-header regional" onclick="toggleAccordion(this)">🏊 2. MEJORES CLUBES DE
+                    SOACHA</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. AQUACENTER SOACHA (COLSUBSIDIO)</span>
+                            <div class="club-info">📍 Cra. 1 # 38-89, C.C. Ventura</div><span class="club-tag">Solo
+                                afiliados Colsubsidio</span>
+                            <div class="club-info">Instalaciones climatizadas, programas certificados</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. CLUB WAHOO DE NATACIÓN</span>
+                            <div class="club-info">📍 Colegio Claretiano (Bosa/Soacha)</div><span
+                                class="club-tag">Selección por pruebas</span>
+                            <div class="club-info">Participación en torneos distritales y nacionales</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. PISCINA SOACHA VENTURA TERREROS</span>
+                            <div class="club-info">📍 Cra. 1 # 38-89, Piso 3</div><span class="club-tag">Alquiler por
+                                horas</span>
+                            <div class="club-info">Práctica libre y clases grupales</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. ACTIVE BODYTECH TERREROS</span>
+                            <div class="club-info">📍 Cra. 1 # 38-53</div><span class="club-tag">Membresía
+                                mensual</span>
+                            <div class="club-info">Fitness acuático, entrenamiento personalizado</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. ESCUELA DE FORMACIÓN IMRDS SOACHA</span>
+                            <div class="club-info">📍 Coliseo General Santander</div><span
+                                class="club-tag">Inclusiva</span>
+                            <div class="club-info">Destaca en para-natación, deporte social</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. CLUB DEPORTIVO TIBURONES</span>
+                            <div class="club-info">📍 Soacha Centro</div><span class="club-tag">Precios
+                                accesibles</span>
+                            <div class="club-info">Enfoque en técnica de estilos</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. TECNIPISCINAS (ALIRIO CAMACHO)</span>
+                            <div class="club-info">📍 Cra. 20 # 42B-16</div><span class="club-tag">Metodología
+                                personalizada</span>
+                            <div class="club-info">Clases particulares y grupos pequeños</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. CLUB DE NATACIÓN SAN MATEO</span>
+                            <div class="club-info">📍 Sector San Mateo</div><span class="club-tag">Precios
+                                comunitarios</span>
+                            <div class="club-info">Formación básica, aprovechamiento tiempo libre</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. ESCUELA DE NATACIÓN COMPARTIR</span>
+                            <div class="club-info">📍 Barrio Compartir</div><span class="club-tag">Enfoque lúdico</span>
+                            <div class="club-info">Iniciación, seguridad acuática</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. CLUB DEPORTIVO POSEIDÓN</span>
+                            <div class="club-info">📍 Varias sedes en Soacha</div><span class="club-tag">Experiencia
+                                competitiva</span>
+                            <div class="club-info">Competencia, festivales acuáticos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. CIUDAD BOLÍVAR -->
+            <div class="accordion-item">
+                <button class="accordion-header regional" onclick="toggleAccordion(this)">🏊 3. MEJORES CLUBES DE CIUDAD
+                    BOLÍVAR</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. ESCUELA IDRD - PARQUE MEISSEN</span>
+                            <div class="club-info">📍 Cl. 62 Bis Sur # 18C-32</div><span class="club-tag">Acceso
+                                masivo</span>
+                            <div class="club-info">Programas por niveles, desde 5 años</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. CLUB DEPORTIVO PERFORMANCE</span>
+                            <div class="club-info">📍 Parque Candelaria La Nueva</div><span class="club-tag">Metodología
+                                estructurada</span>
+                            <div class="club-info">Ambientación a perfeccionamiento</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. ESCUELA IDRD - CANDELARIA LA NUEVA</span>
+                            <div class="club-info">📍 Cl. 62B Sur # 22I-63</div><span class="club-tag">Incluye adulto
+                                mayor</span>
+                            <div class="club-info">Salud comunitaria, clases guiadas</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. CENTRO PISCINAS MEISSEN</span>
+                            <div class="club-info">📍 Cl. 62 Bis Sur # 18C-32</div><span class="club-tag">Tarifas
+                                moderadas</span>
+                            <div class="club-info">Piscina climatizada, instructores certificados</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. CLUB DE NATACIÓN LOS DELFINES</span>
+                            <div class="club-info">📍 Piscinas locales</div><span class="club-tag">Enfoque
+                                competitivo</span>
+                            <div class="club-info">Participación en torneos zonales</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. ESCUELA DE FORMACIÓN TUNJUELITO</span>
+                            <div class="club-info">📍 Cobertura en Ciudad Bolívar</div><span class="club-tag">Convenio
+                                juntas comunales</span>
+                            <div class="club-info">Niños de bajos recursos, iniciación</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. CLUB DEPORTIVO ORCAS (SEDES SUR)</span>
+                            <div class="club-info">📍 Sedes alternas en sur de Bogotá</div><span class="club-tag">Cadena
+                                reconocida</span>
+                            <div class="club-info">Formación y competencia, metodología estandarizada</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. ESCUELA DE NATACIÓN EL ENSUEÑO</span>
+                            <div class="club-info">📍 Conjuntos residenciales</div><span class="club-tag">Solo
+                                residentes</span>
+                            <div class="club-info">Clases en piscinas de conjuntos cerrados</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. CLUB DEPORTIVO NUTRIAS</span>
+                            <div class="club-info">📍 Meissen / Candelaria</div><span class="club-tag">Semilleros (6-10
+                                años)</span>
+                            <div class="club-info">Iniciación deportiva, primeros contactos</div>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. PROGRAMA "DEPORTE PARA LA VIDA"</span>
+                            <div class="club-info">📍 Parques zonales</div><span class="club-tag">Becas
+                                deportivas</span>
+                            <div class="club-info">Retención de talentos (12-18 años)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. BOGOTÁ -->
+            <div class="accordion-item">
+                <button class="accordion-header regional" onclick="toggleAccordion(this)">🏊 4. MEJORES CLUBES DE
+                    BOGOTÁ</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. CLUB GYMNASION</span>
+                            <div class="club-info">📍 Av. Cra. 60 # 57-60</div><a href="https://gymnasion.edu.co"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. GATOS DE AGUA</span>
+                            <div class="club-info">📍 Club El Nogal</div><a href="https://gatosdeagua.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. CLUB ONDA</span>
+                            <div class="club-info">📍 Unidad Deportiva El Salitre</div><a href="https://clubonda.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. PERFORMANCE</span>
+                            <div class="club-info">📍 Varias sedes</div><a href="https://performance.com.co"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. ORCAS</span>
+                            <div class="club-info">📍 Parque Meissen y otras</div><a href="https://orcasclub.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. TIBURONES</span>
+                            <div class="club-info">📍 Club Los Lagartos</div><a href="https://tiburonesnatacion.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. AQUA</span>
+                            <div class="club-info">📍 Calle 127 # 7-35</div><a href="https://aquanatacion.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. SPARTANS</span>
+                            <div class="club-info">📍 Unidad Deportiva El Tunal</div><a
+                                href="https://spartansnatacion.com" target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. DELFINES</span>
+                            <div class="club-info">📍 Club Choquenzá</div><a href="https://delfinesnatacion.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. BÚHOS</span>
+                            <div class="club-info">📍 Club La Aguadora</div><a href="https://buhosnatacion.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. CUNDINAMARCA -->
+            <div class="accordion-item">
+                <button class="accordion-header regional" onclick="toggleAccordion(this)">🏊 5. MEJORES CLUBES DE
+                    CUNDINAMARCA</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. CLUB GIRARDOT</span>
+                            <div class="club-info">📍 Girardot</div><a href="https://nataciongirardot.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. CLUB FUSAGASUGÁ</span>
+                            <div class="club-info">📍 Fusagasugá</div><a href="https://cnfusagasuga.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. CLUB CHÍA</span>
+                            <div class="club-info">📍 Chía</div><a href="https://natacionchia.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. CLUB FACATATIVÁ</span>
+                            <div class="club-info">📍 Facatativá</div><a href="https://cnfacatativa.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. CLUB ZIPAQUIRÁ</span>
+                            <div class="club-info">📍 Zipaquirá</div><a href="https://natacionzipa.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. CLUB MOSQUERA</span>
+                            <div class="club-info">📍 Mosquera</div><a href="https://cnmosquera.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. CLUB MADRID</span>
+                            <div class="club-info">📍 Madrid</div><a href="https://natacionmadrid.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. CLUB FUNZA</span>
+                            <div class="club-info">📍 Funza</div><a href="https://cnfunza.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. CLUB SOACHA</span>
+                            <div class="club-info">📍 Soacha</div><a href="https://natacionsoacha.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. CLUB COTA</span>
+                            <div class="club-info">📍 Cota</div><a href="https://natacioncota.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. COLOMBIA -->
+            <div class="accordion-item">
+                <button class="accordion-header nacional" onclick="toggleAccordion(this)">🇨🇴 MEJORES CLUBES DE
+                    COLOMBIA</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. CLUB GYMNASION</span>
+                            <div class="club-info">📍 Bogotá</div><a href="https://www.gymnasion.edu.co" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. CLUB ONDA</span>
+                            <div class="club-info">📍 Bogotá</div><a href="https://www.clubonda.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. CLUB CALI</span>
+                            <div class="club-info">📍 Cali</div><a href="https://www.natacioncali.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. CLUB MEDELLÍN</span>
+                            <div class="club-info">📍 Medellín</div><a href="https://www.cnmmedellin.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. CLUB BUCARAMANGA</span>
+                            <div class="club-info">📍 Bucaramanga</div><a href="https://www.cnbucaramanga.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. CLUB BARRANQUILLA</span>
+                            <div class="club-info">📍 Barranquilla</div><a href="https://www.natacionbarranquilla.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. CLUB PEREIRA</span>
+                            <div class="club-info">📍 Pereira</div><a href="https://www.cnpereira.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. CLUB CARTAGENA</span>
+                            <div class="club-info">📍 Cartagena</div><a href="https://www.natacioncartagena.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. CLUB MANIZALES</span>
+                            <div class="club-info">📍 Manizales</div><a href="https://www.natacionmanizales.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. CLUB PASTO</span>
+                            <div class="club-info">📍 Pasto</div><a href="https://www.natacionpasto.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. LATINOAMÉRICA -->
+            <div class="accordion-item">
+                <button class="accordion-header internacional" onclick="toggleAccordion(this)">🌎 MEJORES CLUBES DE
+                    LATINOAMÉRICA</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. CLUB DE REGATAS LIMA</span>
+                            <div class="club-info">📍 Perú</div><a href="https://www.regatas.org.pe" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. MINAS TÊNIS CLUBE</span>
+                            <div class="club-info">📍 Brasil</div><a href="https://www.minastenis.com.br"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. BOCA JUNIORS</span>
+                            <div class="club-info">📍 Argentina</div><a href="https://www.bocajuniors.com.ar/natacion"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. UNIVERSIDAD CATÓLICA</span>
+                            <div class="club-info">📍 Chile</div><a href="https://www.crossfituc.cl/natacion"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. QUERÉTARO</span>
+                            <div class="club-info">📍 México</div><a href="https://www.cnqueretaro.com.mx"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. MEDLEY</span>
+                            <div class="club-info">📍 Uruguay</div><a href="https://www.medley.edu.uy" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. GATORADE</span>
+                            <div class="club-info">📍 Venezuela</div><a href="https://www.gatoradeswim.com.ve"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. COSTA RICA</span>
+                            <div class="club-info">📍 Costa Rica</div><a href="https://www.cncr.org" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. MONTEVIDEO</span>
+                            <div class="club-info">📍 Uruguay</div><a href="https://www.cnm.org.uy" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. PARAGUAYO</span>
+                            <div class="club-info">📍 Paraguay</div><a href="https://www.natacionpy.org" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. AMÉRICA -->
+            <div class="accordion-item">
+                <button class="accordion-header internacional" onclick="toggleAccordion(this)">🇺🇸 MEJORES CLUBES DE
+                    AMÉRICA</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. USA SWIMMING NATIONAL TEAM</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.usaswimming.org" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. SWIMMING CANADA</span>
+                            <div class="club-info">📍 Canadá</div><a href="https://www.swimming.ca" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. CLUB WOLVERINE</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.mgoblue.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. SANTA CLARA</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.santaclaraswimclub.org"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. MISSION VIEJO</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.mvnadadores.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. GATOR (FLORIDA)</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.floridagators.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. LONGHORN (TEXAS)</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.texassports.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. SWIMMAC CAROLINA</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.swimmaccarolina.org"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. NATION'S CAPITAL</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.ncswim.org" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. ALTO RENDIMIENTO BRASIL</span>
+                            <div class="club-info">📍 Brasil</div><a href="https://www.cbda.org.br" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. EUROPA -->
+            <div class="accordion-item">
+                <button class="accordion-header mundial" onclick="toggleAccordion(this)">🇪🇺 MEJORES CLUBES DE
+                    EUROPA</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. ENERGY STANDARD</span>
+                            <div class="club-info">📍 Internacional</div><a href="https://www.energystandard.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. LONDON ROAR</span>
+                            <div class="club-info">📍 Reino Unido</div><a href="https://www.londonroar.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. CN MARSEILLE</span>
+                            <div class="club-info">📍 Francia</div><a href="https://www.cnmarseille.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. CIRCOLO CANOTTIERI ANIENE</span>
+                            <div class="club-info">📍 Italia</div><a href="https://www.aniene.it" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. SAN PETERSBURGO</span>
+                            <div class="club-info">📍 Rusia</div><a href="https://www.swimspb.ru" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. SG FRANKFURT</span>
+                            <div class="club-info">📍 Alemania</div><a href="https://www.sgfrankfurt.de" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. REAL CANOE</span>
+                            <div class="club-info">📍 España</div><a href="https://www.realcanoe.es" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. NEDERLANDSE ZWEM BOND</span>
+                            <div class="club-info">📍 Países Bajos</div><a href="https://www.zwemmen.nl" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. DINAMO MOSCÚ</span>
+                            <div class="club-info">📍 Rusia</div><a href="https://www.dinamo.ru/swim" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. BUDAPEST</span>
+                            <div class="club-info">📍 Hungría</div><a href="https://www.budapestswim.hu" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 10. MUNDO -->
+            <div class="accordion-item">
+                <button class="accordion-header mundial" onclick="toggleAccordion(this)">🌍 MEJORES CLUBES DEL
+                    MUNDO</button>
+                <div class="accordion-content">
+                    <div class="club-grid">
+                        <div class="club-card"><span class="club-name">1. USA SWIMMING NATIONAL TEAM</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.usaswimming.org" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">2. SWIMMING AUSTRALIA</span>
+                            <div class="club-info">📍 Australia</div><a href="https://www.swimming.org.au"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">3. ENERGY STANDARD</span>
+                            <div class="club-info">📍 Internacional</div><a href="https://www.energystandard.com"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">4. MINAS TÊNIS CLUBE</span>
+                            <div class="club-info">📍 Brasil</div><a href="https://www.minastenis.com.br"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">5. CLUB DE REGATAS LIMA</span>
+                            <div class="club-info">📍 Perú</div><a href="https://www.regatas.org.pe" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">6. SG FRANKFURT</span>
+                            <div class="club-info">📍 Alemania</div><a href="https://www.sgfrankfurt.de" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">7. CN MARSEILLE</span>
+                            <div class="club-info">📍 Francia</div><a href="https://www.cnmarseille.com" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">8. CIRCOLO CANOTTIERI ANIENE</span>
+                            <div class="club-info">📍 Italia</div><a href="https://www.aniene.it" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">9. SWIMMING CANADA</span>
+                            <div class="club-info">📍 Canadá</div><a href="https://www.swimming.ca" target="_blank"
+                                class="club-link">🌐 Sitio Web</a>
+                        </div>
+                        <div class="club-card"><span class="club-name">10. SANTA CLARA</span>
+                            <div class="club-info">📍 EE.UU.</div><a href="https://www.santaclaraswimclub.org"
+                                target="_blank" class="club-link">🌐 Sitio Web</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleAccordion(header) {
+            header.classList.toggle('active');
+            const content = header.nextElementSibling;
+            content.classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>
